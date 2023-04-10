@@ -1,0 +1,28 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.star {
+  animation: forwards 2.5s ease-out spin;
+}
+
+@keyframes spin {
+  /*
+  God forgive me for this unholy CSS
+  */
+  from {
+      scale: 0;
+  }
+  25% {
+      scale: 1;
+  }
+  75% {
+      scale: 1;
+  }
+  to {
+      scale: 0;
+  }
+}
