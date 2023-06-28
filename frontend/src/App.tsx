@@ -56,10 +56,10 @@ export default () => {
     }, 50);
 
     if (!data) {
-        return (<div className="w-full h-full max-h-screen">
+        return (<div className="w-full max-h-screen h-full">
             <div className="flex justify-center items-center text-center w-full h-full flex-col">
                 <p className="text-2xl">{isLoading ? "Loading.." : "Something went wrong whilst loading information!"}</p>
-                {error ? (<p className="text-lg">{error.message}</p>) : (<></>)}
+                {(error && !isLoading) ? (<p className="text-lg">{error.message}</p>) : (<></>)}
             </div>
         </div>);
     }
@@ -81,32 +81,34 @@ export default () => {
                     }} className="star w-3 h-3" />
                 ))}
             </div>
-            <motion.div className="w-[100%] flex justify-center items-center mt-24" initial={{y: 25, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{duration: 0.5}}>
-                <div className='block'>
-                    <div className='flex justify-center'>
-                        <img className='w-40 rounded-2xl' src={data.picture} />
-                    </div>
-                    <p className='text-xl mt-4'>{data.name}</p>
-                    <p className='text-lg mt-2'>Software Developer</p>
-                    <div className='mt-8 text-2xl'>
-                    <p className='text-xl'>My socials</p>
-                        <div className='flex flex-row flex-nowrap justify-center'>
-                            <Tooltip icon={faGithub} text="My GitHub" href="https://github.com/GacekKosmatek" />
-                            <Tooltip icon={faDiscord} text={`${data.tag || `@${data.handle}`}`} href={`https://discord.com/users/${data.id}`} />
+            <div className="w-full h-full flex justify-center text-center">
+                <motion.div className="w-full flex justify-center items-center" initial={{y: 25, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{duration: 0.5}}>
+                    <div className='block'>
+                        <div className='flex justify-center'>
+                            <img className='w-40 rounded-2xl' src={data.picture} />
                         </div>
-                        <p className='text-xl'>Technologies I know and use</p>
-                        <div className='flex flex-row flex-nowrap justify-center'>
-                            <Tooltip icon={faPython} text='Python' />
-                            <Tooltip icon={faJava} text='Java' />
-                            <Tooltip icon={faSquareJs} text='JavaScript' />
-                            <Tooltip icon={faReact} text='React.js' />
-                            <Tooltip icon={faUnity} text='Unity' />
-                            <Tooltip icon={faGit} text='Git' />
-                            <Tooltip icon={faLinux} text='Linux' />
+                        <p className='text-xl mt-4'>{data.name}</p>
+                        <p className='text-lg mt-2'>Software Developer</p>
+                        <div className='mt-8 text-2xl'>
+                        <p className='text-xl'>My socials</p>
+                            <div className='flex flex-row flex-nowrap justify-center'>
+                                <Tooltip icon={faGithub} text="My GitHub" href="https://github.com/GacekKosmatek" />
+                                <Tooltip icon={faDiscord} text={`${data.tag || `@${data.handle}`}`} href={`https://discord.com/users/${data.id}`} />
+                            </div>
+                            <p className='text-xl'>Technologies I know and use</p>
+                            <div className='flex flex-row flex-nowrap justify-center'>
+                                <Tooltip icon={faPython} text='Python' />
+                                <Tooltip icon={faJava} text='Java' />
+                                <Tooltip icon={faSquareJs} text='JavaScript' />
+                                <Tooltip icon={faReact} text='React.js' />
+                                <Tooltip icon={faUnity} text='Unity' />
+                                <Tooltip icon={faGit} text='Git' />
+                                <Tooltip icon={faLinux} text='Linux' />
+                            </div>
                         </div>
                     </div>
-                </div>
-            </motion.div>
+                </motion.div>
+            </div>
         </>
     );
 }
