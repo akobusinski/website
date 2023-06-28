@@ -1,5 +1,4 @@
 from fastapi_cache.backends.redis import RedisBackend
-from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv; load_dotenv()
 from fastapi.responses import JSONResponse
 from fastapi_cache import FastAPICache
@@ -23,14 +22,6 @@ app.include_router(router.get_router())
 @app.exception_handler(Exception)
 async def exception_handler(request: Request, exc: Exception):
     return JSONResponse(status_code=500, content={"success": False, "message": "Internal server error"})
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_credentials=False,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 @app.on_event("startup")
 async def startup():
