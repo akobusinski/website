@@ -37,7 +37,7 @@ function useInterval(callback: () => void, delay: number) {
 export default () => {
     const [components, setComponents] = useState<StarComponent[]>([]);
     const [counter, setCounter] = useState<number>(0);
-    const { data, error, isLoading } = useSWR<User, Error>('/api/getUser', fetcher);
+    const { data, error } = useSWR<User, Error>('/api/getUser', fetcher);
     
     useInterval(() => {
         if (!data) return
@@ -56,12 +56,16 @@ export default () => {
     }, 50);
 
     if (!data) {
-        return (<div className="w-full max-h-screen h-full">
-            <div className="flex justify-center items-center text-center w-full h-full flex-col">
-                <p className="text-2xl">{isLoading ? "Loading.." : "Something went wrong whilst loading information!"}</p>
-                {(error && !isLoading) ? (<p className="text-lg">{error.message}</p>) : (<></>)}
-            </div>
-        </div>);
+        if (error) {
+            return (<div className="w-full max-h-screen h-full">
+                <div className="flex justify-center items-center text-center w-full h-full flex-col">
+                    <p className="text-2xl">Something went wrong whilst loading information!</p>
+                    <p className="text-lg">{error.message}</p>
+                </div>
+            </div>);
+        }
+
+        return <></> // Still loading
     }
 
     document.title = data.name
@@ -82,7 +86,7 @@ export default () => {
                 ))}
             </div>
             <div className="w-full h-full flex justify-center text-center">
-                <motion.div className="w-full flex justify-center items-center" initial={{y: 25, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{duration: 0.5}}>
+                <motion.div className="w-full flex justify-center items-center" initial={{y: 25, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{duration: 1}}>
                     <div className='block'>
                         <div className='flex justify-center'>
                             <img className='w-40 rounded-2xl' src={data.picture} />
