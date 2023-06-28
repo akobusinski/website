@@ -16,3 +16,11 @@ export type StarComponent = {
     rotation: number;
     id: number;
 }
+
+export type User = {
+    name: string;
+    picture: string; // URL
+    handle: string | null;
+    tag: string | null;
+    id: number;
+}
