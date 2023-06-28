@@ -1,0 +1,6 @@
+fastapi
+fastapi-cache2[redis]
+redis[hiredis]
+aiohttp
+uvicorn
+python-dotenv
