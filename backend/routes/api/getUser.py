@@ -24,7 +24,7 @@ async def handler(request: Request):
     
     return JSONResponse({
         "name": json["global_name"],
-        "picture": f"https://cdn.discordapp.com/avatars/{json['id']}/{json['avatar']}.webp",
+        "picture": f"https://cdn.discordapp.com/avatars/{json['id']}/{json['avatar']}",
         "handle": json["username"] if discrim == 0 else None,
         "tag": None if discrim == 0 else f"{json['username']}#{json['discriminator']}",
         "id": json["id"],
