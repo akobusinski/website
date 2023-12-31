@@ -9,19 +9,22 @@ __METADATA__ = {
 }
 
 BASE_URL = "https://discord.com/api/v10"
+USER_ID = os.getenv("DISCORD_ID")
+TOKEN = os.getenv("DISCORD_TOKEN")
 
 @cache(expire=3600) # An hour
 async def handler(request: Request):
-    user_id = os.getenv("DISCORD_ID")
-    token = os.getenv("DISCORD_TOKEN")
     async with aiohttp.ClientSession() as session:
-        async with session.get(BASE_URL + f"/users/{user_id}", headers={
-            "Authorization": f"Bot {token}"
+        async with session.get(BASE_URL + f"/users/{USER_ID}", headers={
+            "Authorization": f"Bot {TOKEN}"
         }) as resp:
             json = await resp.json()
 
-    discrim = int(json["discriminator"])
-    
+    try: # little safety check if discord removes the field
+        discrim = int(json["discriminator"])
+    except Exception:
+        discrim = 0
+
     return JSONResponse({
         "name": json["global_name"],
         "picture": f"https://cdn.discordapp.com/avatars/{json['id']}/{json['avatar']}",
