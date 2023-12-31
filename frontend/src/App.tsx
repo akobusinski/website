@@ -96,7 +96,7 @@ export default () => {
                         <div className='mt-8 text-2xl'>
                         <p className='text-xl'>My socials</p>
                             <div className='flex flex-row flex-nowrap justify-center'>
-                                <Tooltip icon={faGithub} text="My GitHub" href="https://github.com/GacekKosmatek" />
+                                <Tooltip icon={faGithub} text="My GitHub" href="https://github.com/akobusinski" />
                                 <Tooltip icon={faDiscord} text={`${data.tag || `@${data.handle}`}`} href={`https://discord.com/users/${data.id}`} />
                             </div>
                             <p className='text-xl'>Technologies I know and use</p>
