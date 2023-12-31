@@ -1,6 +1,5 @@
 fastapi
-fastapi-cache2[redis]
-redis[hiredis]
+fastapi-cache2
 aiohttp
 uvicorn
 python-dotenv
