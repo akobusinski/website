@@ -1,3 +1,4 @@
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import type { ReactNode } from "react";
@@ -34,9 +35,10 @@ export async function generateMetadata() {
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
     return <html lang="en">
-        <Analytics />
         <body className={cn("antialiased max-w-full min-w-full min-h-screen flex bg-black", geistSans.variable, geistMono.variable)}>
             {children}
+            <Analytics />
+            <SpeedInsights />
         </body>
     </html>
 }
