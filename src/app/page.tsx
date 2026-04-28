@@ -27,11 +27,17 @@ const LINKS: SocialLink[] = [
 export default async function Home() {
     const user = await getUser();
 
-    const links: SocialLink[] = [
-        { icon: faGithub, platform: "GitHub", href: `https://github.com/${user.github}` },
-        ...LINKS,
-        { icon: faDiscord, platform: "Discord", href: `https://discord.com/users/${user.discord.id}`},
-    ]
+    const links: SocialLink[] = [];
+
+    if (user.github) {
+        links.push({ icon: faGithub, platform: "GitHub", href: `https://github.com/${user.github}` });
+    }
+
+    links.push(...LINKS);
+
+    if (user.discord) {
+        links.push({ icon: faDiscord, platform: "Discord", href: `https://discord.com/users/${user.discord.id}`});
+    }
 
     return <>
         <motion.div

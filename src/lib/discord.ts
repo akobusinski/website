@@ -26,7 +26,11 @@ export function request(path: string, method: string = "GET", body: BodyInit | n
     });
 }
 
-export async function fetchUser(userId: string): Promise<UserSchema> {
+export async function fetchUser(userId: string | undefined): Promise<UserSchema | undefined> {
+    if (TOKEN === undefined || userId === undefined) {
+        return undefined;
+    }
+
     const response = await request(`/users/${userId}`);
 
     const json = await response.json();

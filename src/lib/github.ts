@@ -99,7 +99,11 @@ export function request(path: string, method: string = "GET", body: BodyInit | n
     });
 }
 
-export async function fetchUser(accountId: string): Promise<UserSchema> {
+export async function fetchUser(accountId: string | undefined): Promise<UserSchema | undefined> {
+    if (accountId === undefined) {
+        return undefined;
+    }
+
     const response = await request(`/user/${accountId}`);
 
     const json = await response.json();

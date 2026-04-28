@@ -14,8 +14,8 @@ const User = z.object({
     discord: z.object({
         id: z.string(),
         handle: z.string(),
-    }),
-    github: z.string(),
+    }).optional(),
+    github: z.string().optional(),
 });
 
 export type User = z.infer<typeof User>;
@@ -26,13 +26,19 @@ export async function getUser(): Promise<User> {
     const discordUser = await fetchDiscordUser(DISCORD_USER_ID);
     const githubUser = await fetchGitHubUser(GITHUB_USER_ID);
 
+    const name = githubUser?.name || discordUser?.global_name || discordUser?.username;
+
+    if (name === undefined) {
+        throw new Error("No name available");
+    }
+
     return {
-        name: githubUser.name || discordUser.global_name || discordUser.username,
-        avatar: githubUser.avatar_url || (discordUser.avatar ? `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}` : undefined),
-        discord: {
+        name,
+        avatar: githubUser?.avatar_url || (discordUser?.avatar ? `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}` : undefined),
+        discord: discordUser === undefined ? undefined : {
             id: discordUser.id,
             handle: discordUser.discriminator === undefined ? `@${discordUser.username}` : `${discordUser.username}#${discordUser.discriminator}`,
         },
-        github: githubUser.login,
+        github: githubUser?.login,
     }
 }
