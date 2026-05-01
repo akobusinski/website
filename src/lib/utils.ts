@@ -11,3 +11,13 @@ export function chunk<T>(array: T[], size: number): T[][] {
         (_, i) => array.slice(i * size, (i + 1) * size)
     );
 }
+
+export function createRequest(base: string, options?: Omit<RequestInit, 'body' | 'method'>) {
+    return function request(path: string, method: string = "GET", body: BodyInit | null = null) {
+        return fetch(base + path, {
+            method,
+            body,
+            ...options,
+        });
+    }
+}

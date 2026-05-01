@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { createRequest } from "./utils";
 
 const BASE_URL = "https://api.github.com";
 const API_VERSION = "2026-03-10";
@@ -89,15 +90,11 @@ export type PrivateUserSchema = z.infer<typeof PrivateUserSchema>;
 export type PublicUserSchema = z.infer<typeof PublicUserSchema>;
 export type UserSchema = z.infer<typeof UserSchema>;
 
-export function request(path: string, method: string = "GET", body: BodyInit | null = null) {
-    return fetch(BASE_URL + path, {
-        method,
-        body,
-        headers: {
-            "X-GitHub-Api-Version": API_VERSION
-        }
-    });
-}
+export const request = createRequest(BASE_URL, {
+    headers: {
+        "X-GitHub-Api-Version": API_VERSION
+    },
+});
 
 export async function fetchUser(accountId: string | undefined): Promise<UserSchema | undefined> {
     if (accountId === undefined) {

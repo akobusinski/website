@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { createRequest } from "./utils";
 
 const BASE_URL = "https://discord.com/api/v10";
 const TOKEN    = process.env.DISCORD_TOKEN;
@@ -15,16 +16,11 @@ export const UserSchema = z.object({
 });
 
 export type UserSchema = z.infer<typeof UserSchema>;
-
-export function request(path: string, method: string = "GET", body: BodyInit | null = null) {
-    return fetch(BASE_URL + path, {
-        method,
-        body,
-        headers: {
-            "Authorization": `Bot ${TOKEN}`
-        }
-    });
-}
+export const request = createRequest(BASE_URL, {
+    headers: {
+        "Authorization": `Bot ${TOKEN}`
+    },
+});
 
 export async function fetchUser(userId: string | undefined): Promise<UserSchema | undefined> {
     if (TOKEN === undefined || userId === undefined) {
